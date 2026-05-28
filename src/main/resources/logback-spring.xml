@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SmartHire Pro - Logback Configuration
+    - DEV:     Human-readable console output with colors
+    - PROD:    Structured JSON to stdout (consumed by CloudWatch / ELK)
+-->
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- ─── Properties ─────────────────────────────────────── -->
+    <springProperty scope="context" name="appName"  source="spring.application.name"  defaultValue="SmartHire Pro"/>
+    <springProperty scope="context" name="profile"  source="spring.profiles.active"   defaultValue="dev"/>
+
+    <!-- ─── DEV: Colored Console Appender ─────────────────── -->
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <logger name="com.smarthire"           level="DEBUG"/>
+        <logger name="org.springframework.security" level="DEBUG"/>
+        <logger name="org.hibernate.SQL"        level="DEBUG"/>
+    </springProfile>
+
+    <!-- ─── STAGING / PROD: JSON Structured Logging ─────────── -->
+    <springProfile name="staging,prod">
+        <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdcKeyName>traceId</includeMdcKeyName>
+                <includeMdcKeyName>spanId</includeMdcKeyName>
+                <customFields>{"app":"${appName}","env":"${profile}"}</customFields>
+            </encoder>
+        </appender>
+
+        <root level="WARN">
+            <appender-ref ref="JSON_CONSOLE"/>
+        </root>
+        <logger name="com.smarthire" level="INFO"/>
+    </springProfile>
+
+</configuration>
