@@ -1,0 +1,244 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 32px clamp(20px, 6vw, 72px) 60px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--heading);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--text-strong);
+}
+
+.brand-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 6px rgba(53, 120, 106, 0.15);
+}
+
+.topbar-note {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.layout {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: stretch;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.panel-left h1 {
+    font-size: clamp(34px, 4.2vw, 54px);
+    line-height: 1.05;
+    color: var(--text-strong);
+    margin: 0;
+}
+
+.eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    font-weight: 700;
+    margin: 0;
+}
+
+.lead {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0;
+}
+
+.feature-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.feature-grid h3 {
+    font-family: var(--heading);
+    font-size: 16px;
+    margin: 0 0 6px;
+    color: var(--text-strong);
+}
+
+.feature-grid p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.panel-right {
+    justify-content: center;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 30px 80px rgba(18, 36, 30, 0.08);
+    border: 1px solid rgba(30, 60, 50, 0.1);
+    backdrop-filter: blur(16px);
+}
+
+.tabs {
+    display: inline-flex;
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.tab {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab.active {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 10px 25px rgba(34, 111, 100, 0.3);
+}
+
+.form {
+    margin-top: 24px;
+    display: grid;
+    gap: 16px;
+}
+
+.field {
+    display: grid;
+    gap: 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+}
+
+.field input,
+.field select {
+    border-radius: 12px;
+    border: 1px solid rgba(30, 60, 50, 0.15);
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: var(--sans);
+    background: white;
+    color: var(--text-strong);
+}
+
+.field input:focus,
+.field select:focus {
+    outline: 2px solid rgba(53, 120, 106, 0.4);
+    border-color: rgba(53, 120, 106, 0.6);
+}
+
+.primary {
+    border: none;
+    background: var(--accent-dark);
+    color: white;
+    font-size: 16px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(31, 93, 84, 0.25);
+}
+
+.primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.alert {
+    margin: 0;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.alert.error {
+    background: rgba(208, 71, 40, 0.1);
+    color: #c43c22;
+}
+
+.alert.success {
+    background: rgba(53, 120, 106, 0.12);
+    color: #1f6155;
+}
+
+.token {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.token span {
+    font-family: var(--mono);
+    color: var(--text-strong);
+}
+
+.helper {
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px dashed rgba(30, 60, 50, 0.2);
+}
+
+.helper h4 {
+    margin: 0 0 8px;
+    font-family: var(--heading);
+    color: var(--text-strong);
+}
+
+.helper p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+@media (max-width: 960px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
