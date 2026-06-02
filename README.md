@@ -1,121 +1,108 @@
-# SmartHire Pro 🚀
+# SmartHire Pro
 
-> **AI-Based Recruitment Management System**  
-> Built with Java 17 · Spring Boot 3 · Spring Security · JWT · MySQL · Docker
+SmartHire Pro is an AI-based recruitment management system with a Spring Boot backend and a Vite + React frontend.
 
----
+## Repository Layout
 
-## 📁 Project Structure
-
-```
-smarthire-pro/
-├── src/
-│   └── main/
-│       ├── java/com/smarthire/pro/
-│       │   ├── config/          # SecurityConfig, SwaggerConfig
-│       │   ├── controller/      # REST Controllers (Auth, Candidate, Job, Interview, ...)
-│       │   ├── dto/
-│       │   │   ├── request/     # Request DTOs
-│       │   │   └── response/    # Response DTOs
-│       │   ├── entity/          # JPA Entities (User, Candidate, Job, Application, ...)
-│       │   ├── exception/       # Custom exceptions & GlobalExceptionHandler
-│       │   ├── repository/      # Spring Data JPA Repositories
-│       │   ├── security/        # JwtTokenProvider, JwtFilter, UserDetailsService
-│       │   ├── service/         # Business Logic Services
-│       │   └── SmartHireProApplication.java
-│       └── resources/
-│           └── application.yml
-├── Dockerfile
+```text
+SmartHire Pro/
+├── backend/
+│   ├── pom.xml
+│   ├── Dockerfile
+│   └── src/
+│       └── main/
+│           ├── java/com/smarthire/pro/
+│           │   ├── config/
+│           │   ├── controller/
+│           │   ├── dto/
+│           │   ├── entity/
+│           │   ├── exception/
+│           │   ├── repository/
+│           │   ├── security/
+│           │   └── service/
+│           └── resources/
+│               ├── application.properties
+│               ├── application-dev.properties
+│               ├── application-staging.properties
+│               ├── application-prod.properties
+│               └── db/migration/
+├── frontend/
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── src/
+│       ├── App.tsx
+│       ├── App.css
+│       ├── main.tsx
+│       └── index.css
 ├── docker-compose.yml
-├── pom.xml
-└── README.md
+└── docs/
+    └── audits/
 ```
 
----
+## Tech Stack
 
-## ⚡ Quick Start
+- Backend: Java 17, Spring Boot 3.2, Spring Security, Spring Data JPA, Flyway, JWT, MySQL
+- Frontend: React 19, TypeScript, Vite
+- Dev tools: Docker, Docker Compose, Maven, npm
 
-### 1. Prerequisites
-- Java 17+
-- Maven 3.9+
-- Docker & Docker Compose (for local DB)
-- MySQL 8.0 (or use Docker)
+## Local Setup
 
-### 2. Run with Docker Compose (Recommended)
+### Backend
+
+1. Open the backend folder.
+2. Load the local environment variables from `backend/.env`.
+3. Start the application with Maven.
+
 ```bash
-docker-compose up -d
-```
-> App runs on `http://localhost:8080/api`
-
-### 3. Run Locally (with local MySQL)
-```bash
-# Update src/main/resources/application.yml with your DB credentials
+cd "SmartHire Pro/backend"
+set -a && source .env && set +a
 mvn spring-boot:run
 ```
 
----
+Backend URLs:
 
-## 📖 API Documentation
+- API base: `http://localhost:8080/api`
+- Swagger UI: `http://localhost:8080/api/swagger-ui.html`
 
-Once running, access Swagger UI at:  
-👉 **http://localhost:8080/api/swagger-ui.html**
+### Frontend
 
----
+1. Open the frontend folder.
+2. Install dependencies if needed.
+3. Start the Vite dev server.
 
-## 🔐 Authentication
-
-All APIs (except `/auth/**`) require a Bearer JWT token.
-
-**Register:**
-```http
-POST /api/auth/register
-Content-Type: application/json
-
-{
-  "name": "John HR",
-  "email": "john@company.com",
-  "password": "password123",
-  "role": "HR"
-}
+```bash
+cd "SmartHire Pro/frontend"
+npm install
+npm run dev
 ```
 
-**Login:**
-```http
-POST /api/auth/login
-Content-Type: application/json
+Frontend URL:
 
-{
-  "email": "john@company.com",
-  "password": "password123"
-}
-```
-Returns: `{ "token": "eyJ...", "tokenType": "Bearer", "role": "HR" }`
+- App: `http://localhost:5173`
 
-**Use token in subsequent requests:**
-```http
-Authorization: Bearer eyJ...
-```
+### Database
 
----
+The backend expects MySQL on `localhost:3306` with the credentials defined in `backend/.env`. Database schema changes are handled by Flyway migrations.
 
-## 🏃 Agile Sprint Progress
+## Authentication Flow
 
-| Sprint | Status | Feature |
-|---|---|---|
-| Sprint 1 | ✅ Done | Foundation & Setup |
-| Sprint 2 | 🔄 In Progress | Auth & RBAC |
-| Sprint 3 | ⬜ Planned | Candidate & Job Management |
-| Sprint 4 | ⬜ Planned | Resume Screening & Interviews |
-| Sprint 5 | ⬜ Planned | Onboarding & Status Tracking |
-| Sprint 6 | ⬜ Planned | Dashboard, Reporting & Deployment |
+The frontend is wired to the backend auth endpoints.
 
----
+- Register: `POST /api/auth/register`
+- Login: `POST /api/auth/login`
 
-## 👥 Roles & Access
+Successful login returns a JWT token that is stored in `localStorage` as `smarthire_token`.
 
-| Role | Capabilities |
-|---|---|
-| **ADMIN** | Full access — user management, all features |
-| **HR** | Job postings, candidate management, onboarding, dashboard |
-| **RECRUITER** | Candidate management, interviews, application tracking |
-# SmartHire-Pro
+## Key Features
+
+- Role-based access for `ADMIN`, `HR`, and `RECRUITER`
+- JWT authentication
+- Candidate, job, interview, and onboarding domain models
+- Database migrations through Flyway
+- Separate frontend and backend development workflows
+
+## Notes
+
+- The root project now acts as a container for the backend and frontend apps.
+- The frontend source files live in `frontend/src/`.
+- The backend source files live in `backend/src/`.
